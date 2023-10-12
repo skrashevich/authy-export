@@ -1,0 +1,72 @@
+name: Build and Release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.15.3'
+
+      - name: Build Linux binary
+        run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o authy-export-linux-amd64 -ldflags "-s -w" cmd/authy-export/authy-export.go
+
+      - name: Build macOS binary
+        run: CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o authy-export-darwin-amd64 -ldflags "-s -w" cmd/authy-export/authy-export.go
+
+      - name: Build Windows binary
+        run: CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -o authy-export-windows-amd64.exe -ldflags "-s -w" cmd/authy-export/authy-export.go
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Linux binary
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./authy-export-linux-amd64
+          asset_name: authy-export-linux-amd64
+          asset_content_type: application/octet-stream
+
+      - name: Upload macOS binary
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./authy-export-darwin-amd64
+          asset_name: authy-export-darwin-amd64
+          asset_content_type: application/octet-stream
+
+      - name: Upload Windows binary
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./authy-export-windows-amd64.exe
+          asset_name: authy-export-windows-amd64.exe
+          asset_content_type: application/octet-stream

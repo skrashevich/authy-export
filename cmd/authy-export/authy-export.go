@@ -277,7 +277,7 @@ func loadExistingDeviceRegistration() (deviceRegistration, error) {
 
 func configPath() (string, error) {
 	// TODO: In Go 1.13, use os.UserConfigDir()
-	regrPath, err := os.UserHomeDir()
+	regrPath, err := os.UserConfigDir()
 	if err != nil {
 		return "", err
 	}
