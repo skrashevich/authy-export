@@ -46,6 +46,8 @@ jobs:
           asset_path: ./authy-export-linux-amd64
           asset_name: authy-export-linux-amd64
           asset_content_type: application/octet-stream
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload macOS binary
         uses: actions/upload-release-asset@v1
@@ -54,6 +56,8 @@ jobs:
           asset_path: ./authy-export-darwin-amd64
           asset_name: authy-export-darwin-amd64
           asset_content_type: application/octet-stream
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Windows binary
         uses: actions/upload-release-asset@v1
@@ -62,3 +66,5 @@ jobs:
           asset_path: ./authy-export-windows-amd64.exe
           asset_name: authy-export-windows-amd64.exe
           asset_content_type: application/octet-stream
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
