@@ -7,7 +7,7 @@ on:
       - '*'
 
 jobs:
-  build:
+  build_and_release:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,14 +27,6 @@ jobs:
 
       - name: Build Windows binary
         run: CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -o authy-export-windows-amd64.exe -ldflags "-s -w" cmd/authy-export/authy-export.go
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
 
       - name: Create Release
         id: create_release
