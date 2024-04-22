@@ -12,6 +12,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"syscall"
 	"time"
 
 	"github.com/skrashevich/authy-export"
@@ -31,19 +32,21 @@ func main() {
 	//savePtr := flag.String("save", "", "Save encrypted tokens to this JSON file")
 	flag.Parse()
 
+	var f *os.File
 	if len(os.Args) != 2 {
-		fmt.Println("Usage: ./authy-export-darwin-arm64 <export_file> ")
-		return
+		f = os.NewFile(uintptr(syscall.Stdout), "/dev/stdout")
+	} else {
+		exportFile, err := resolvePath(os.Args[1])
+		if err != nil {
+			fmt.Println("Error resolving exportFile path:", err)
+			return
+		}
+		f, err = os.OpenFile(exportFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		if err != nil {
+			log.Println(err)
+		}
 	}
-	exportFile, err := resolvePath(os.Args[1])
-	if err != nil {
-		fmt.Println("Error resolving exportFile path:", err)
-		return
-	}
-	f, err := os.OpenFile(exportFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
-		log.Println(err)
-	}
+
 	defer f.Close()
 
 	var resp struct {
