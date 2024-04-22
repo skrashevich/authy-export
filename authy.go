@@ -43,7 +43,7 @@ func NewClient() (Client, error) {
 	}
 	return Client{
 		httpCl:    http.Client{},
-		UserAgent: "authy (https://github.com/alexzorin/authy)",
+		UserAgent: "authy (https://github.com/skrashevich/authy-export)",
 		APIKey:    apiKey,
 		nonce:     nonce,
 	}, nil

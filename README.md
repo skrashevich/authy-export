@@ -1,7 +1,7 @@
 # authy
 
 
-[![GoDoc](https://godoc.org/github.com/alexzorin/authy?status.svg)](https://godoc.org/github.com/alexzorin/authy)
+[![GoDoc](https://godoc.org/github.com/skrashevich/authy-export?status.svg)](https://godoc.org/github.com/skrashevich/authy-export)
 
 This is a Go library that allows you to access your [Authy](https://authy.com) TOTP tokens.
 
@@ -20,12 +20,12 @@ It is also able to save the TOTP database in a JSON file encrypted with your Aut
 
 **Installation**
 
-Pre-built binaries are available from the [releases page](https://github.com/alexzorin/authy/releases). (Windows binaries have been removed because of continual false positive virus complaints, sorry).
+Pre-built binaries are available from the [releases page](https://github.com/skrashevich/authy-export/releases). (Windows binaries have been removed because of continual false positive virus complaints, sorry).
 
-Alternatively, it can be compiled from source, which requires [Go 1.12 or newer](https://golang.org/doc/install):
+Alternatively, it can be compiled from source, which requires [Go 1.22 or newer](https://golang.org/doc/install):
 
 ```shell
-go install github.com/alexzorin/authy/...@latest
+go install github.com/skrashevich/authy-export/...@latest
 ```
 
 **To use it:**
@@ -38,7 +38,7 @@ go install github.com/alexzorin/authy/...@latest
 6. The program will dump all of your TOTP tokens in URI format, which you can use to import to other applications.
 7. Alternatively, you can save the TOTP encrypted database to a file with the `--save` option, and reload it later with the `--load` option in order to decrypt it and dump the tokens.
 
-If you [notice any missing TOTP tokens](https://github.com/alexzorin/authy/issues/1#issuecomment-516187701), please try toggling "Authenticator Backups" in your Authy settings, to force your backup to be resynchronized.
+If you [notice any missing TOTP tokens](https://github.com/skrashevich/authy-export/issues/1#issuecomment-516187701), please try toggling "Authenticator Backups" in your Authy settings, to force your backup to be resynchronized.
 
 **How do you then import it into another app?**
 

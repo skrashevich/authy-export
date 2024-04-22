@@ -14,7 +14,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/alexzorin/authy"
+	"github.com/skrashevich/authy-export"
 	"golang.org/x/crypto/ssh/terminal"
 )
 
@@ -32,7 +32,7 @@ func main() {
 	flag.Parse()
 
 	if len(os.Args) != 2 {
-		fmt.Println("Usage: ./authy-export-darwin-amd64 <export_file> ")
+		fmt.Println("Usage: ./authy-export-darwin-arm64 <export_file> ")
 		return
 	}
 	exportFile, err := resolvePath(os.Args[1])
