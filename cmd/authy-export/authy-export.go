@@ -16,7 +16,7 @@ import (
 	"time"
 
 	"github.com/skrashevich/authy-export"
-	"golang.org/x/crypto/ssh/terminal"
+	"golang.org/x/term"
 )
 
 // We'll persist this to the filesystem so we don't need to
@@ -101,7 +101,7 @@ func main() {
 	if len(pp) == 0 {
 		fmt.Printf("Please provide your Authy TOTP backup password: ")
 		var err error
-		pp, err = terminal.ReadPassword(int(os.Stdin.Fd()))
+		pp, err = term.ReadPassword(int(os.Stdin.Fd()))
 		if err != nil {
 			log.Fatalf("Failed to read the password: %v", err)
 		}
